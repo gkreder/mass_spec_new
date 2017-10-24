@@ -1,0 +1,25 @@
+10/4/17 - 10:30am
+
+I'm migrating everything to a new folder since the old structure was
+set up for use on the UCSF cluster. Also want to clean up the directory
+structure so that it's easier to track
+
+
+I'm mostly just copying over the code from before, though changing file names to
+be more precise. I'm adding a '-o' and '-s' flag to the copied over scripts 
+(transformations.py and fragments_adducts.py) that respectively can specify an 
+output and summary file directory. 
+
+Also the way that things are written right now, fast_merge.py takes an 
+input directory and scrapes all the adducts and transformation files.
+I'm changing it so that it requires an adduct file and a transformation file
+just to make things cleaner.
+
+NOTE (merge.py) - The way it's currently written it scrapes a directory and 
+takes all the input and adduct files into lists and parses them. I don't want
+to dive too deeply into rewriting now so I'm just going to have the existing
+list variables only have the single adduct and transformation files as 
+passed by the user via required flags.
+
+I'm also changing the output file names to just be inputname_transformations.csv
+etc etc. 

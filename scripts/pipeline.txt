@@ -1,0 +1,55 @@
+################################################################################
+* Conda Env
+	mass_spec
+################################################################################
+* Requirements
+	xlrd
+################################################################################
+* Pipeline (Finding Transformations)
+	---submit_fragments_adducts.sh---
+		---fragments_adducts_job_script.sh---
+			---fragments_adducts.py---
+				-args: 
+					input file (required)
+					-t (optional): tolerance in RT units (default 0.03)
+					-d (optional): delimiter for output files (default ',' )
+					-o (optional): output directory
+					-s (optional): summary directory
+					-m (optional): mz tolerance (default 0.005)
+				-inputs:
+					-input file
+					-transformations.xlsx
+				-outputs:
+					-METHOD_adducts.csv
+	---submit_transformations.sh
+		---transformations_job_script.sh---
+			---transformations.py---
+				-args: 
+					input file (required)
+					-t (optional): tolerance in m/z units (default 0.01)
+					-d (optional): delimiter for output files (default ',' )
+					-o (optional): output directory
+					-s (optional): summary directory
+				-inputs:
+					-input file
+					-transformations.xlsx
+				-outputs:
+					-METHOD_transformations.csv
+	---submit_merge.sh
+		---merge_job_script.sh---
+			---merge.py---
+				-args: 
+					input file (required)
+					-t (optional): tolerance in m/z units (default 0.01)
+					-d (optional): delimiter for output files (default ',' )
+					-o (optional): output directory
+					-s (optional): summary directory
+				-inputs:
+					-input file
+					-transformations.xlsx
+				-outputs:
+					-METHOD_merge.csv
+
+* Pipeline (Analyzing found transformations)	
+	---analyze_transformations.py	
+		
