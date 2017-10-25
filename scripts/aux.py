@@ -39,7 +39,6 @@ def join_trans_lines(closest_match, line_from, line_to, \
 				  get_rt_in(line_to),
 				  get_method_in(line_to)]
 	return(delimiter.join(saved_line))
-
 def get_header(delimiter):
 	return delimiter.join(['transformation',
 						   'closest_reaction',
@@ -52,7 +51,6 @@ def get_header(delimiter):
 						   'mz_to',
 						   'rt_to',
 						   'method'])
-
 def check_time(i, lines, start_time, tabs = 0):
 	index_1 = int(math.ceil((len(lines) / 100)))
 	index_10 = int(index_1 * 10)
@@ -104,5 +102,14 @@ def get_trans_err(line):
 def get_trans_from(line):
 	return line.split(',')[0].split('--->')[0]
 def get_trans_to(line):
+	return line.split(',')[0].split('--->')[1]
+################################################################################
+# Functions for reading intermediate isoform files
+################################################################################
+def get_isoform_err(line):
+	return float(line.split(',')[3])
+def get_isoform_from(line):
+	return line.split(',')[0].split('--->')[0]
+def get_isoform_to(line):
 	return line.split(',')[0].split('--->')[1]
 ################################################################################

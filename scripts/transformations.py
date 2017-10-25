@@ -56,7 +56,7 @@ for i, arg in enumerate(sys.argv[1 : -1]):
 if sys.argv[-2][0] == '-' and sys.argv[-2][0 : 2] != '--':
 	sys.exit('''Error: must specify input file''')
 in_file = sys.argv[-1]
-
+print(in_file)
 
 # Transformations dictionary for searching reactions
 # open transformations worksheet

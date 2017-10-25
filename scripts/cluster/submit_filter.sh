@@ -1,0 +1,1 @@
+sbatch --array=0-8:1 filter_job_script.sh
