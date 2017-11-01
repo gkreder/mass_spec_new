@@ -136,6 +136,9 @@ def is_redun_adduct(trans_from, trans_to, adducts, found_trans):
 				if x_to in found_trans[x_from]:
 					found = True
 	return found
+
+# Check for a redundant trans_from ---> trans_to transformation
+# and mark that transformation in the found_trans list
 def is_redun_isoform(trans_from, trans_to, isoforms, found_trans):
 	found = False
 	redun_from_list = get_redun_isoforms(trans_from, isoforms)
@@ -203,6 +206,7 @@ num_recorded = 0
 num_isoforms = 0
 adducts = {}
 found_trans = {}
+kept_isoforms = {}
 isoforms = {}
 isoform_lines = {} # lines to fill in isoform links
 isoform_metabs = [] # to fill in isoform links later
@@ -241,7 +245,9 @@ trans_lines = []
 # transformation file
 with open(transformation_fname, 'r') as f:
 	print('\tFiltering candidate transformations...')
-	loop_lines = f.readlines()[1 : ]
+	loop_lines = f.readlines()[0 : ]
+	header = loop_lines[0].strip()
+	loop_lines = loop_lines[1 : ]
 	if test:
 		loop_lines = loop_lines[ : test_num]
 	for trans_index, x in enumerate(loop_lines):
@@ -279,7 +285,15 @@ for metab in set(isoform_metabs):
 # out_file = cohort + '_merged.csv'
 out_file = adducts_fname.replace('_adducts.csv', '_merged.csv')
 with open(out_file, 'w') as f:
+	header += ',isoform'
+	print(header, file = f)
 	for line in trans_lines:
+		m_from = get_trans_from(line)
+		m_to = get_trans_to(line)
+		if m_from in isoforms or m_to in isoforms:
+			line += ',yes'
+		else:
+			line += ',no'
 		print(line, file = f)
 if move_output:
 	os.system('mv ' + out_file + ' ' + out_dir)
